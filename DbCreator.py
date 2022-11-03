@@ -26,31 +26,6 @@ for line in split_newline:
 split_tabs = [lin.split('\t') for lin in split_newline]
 split_tabs.pop()
 
-'''
-complete_stuff = ''
-switch = True
-while True:
-    if switch:
-        stuff = input('Dump here: \n')
-        switch = False
-    else: 
-        stuff = input('Compiling... \n')
-    if stuff == 'done':
-        break
-    if stuff[0] == '\t':
-        stuff = 'NULL' + stuff
-    i = 1
-    while i < len(stuff):
-        if stuff[i-1]=='\t' and stuff[i]=='\t':
-            stuff = stuff[:i] + 'NULL' + stuff[i:]
-            i += 1
-        i += 1
-    if stuff[len(stuff)-1] == '\t':
-        stuff = stuff + 'NULL'
-    complete_stuff += stuff
-    complete_stuff += '\n'
-'''
-
 #create table and add columns
 tab_name = input('Table name: \n')
 curs.execute(
@@ -58,7 +33,7 @@ curs.execute(
         blank TEXT
     ); """
 )
-if input('Flip Table (y/n)?\nMakes the original tables\' rows and columns into columns and rows\n') == 'y':
+if input('Flip Table (y/n)?\nMakes the original tables\' rows and columns into columns and rows respectively\n') == 'y':
     #flips the table
     new_split_tabs = []
     for i in range(len(split_tabs[0])):
@@ -78,7 +53,7 @@ header = split_tabs[0]
 f_row = split_tabs[1]
 def get_dtypes():
     #assigns column data types based on the values in the first row of the table
-    prefer_real = input('REAL over INT (y/n)?\nIf you have columns with both floats and integers, answer y\n') == 'y'
+    prefer_real = input('Prefer REAL over INT (y/n)?\nIf you have columns that contain both floats and integers, answer y\n') == 'y'
     for val in f_row:
         try:
             if str(float(val))[::-1][0:2] == '0.' and not prefer_real:
