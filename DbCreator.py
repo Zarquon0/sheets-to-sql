@@ -7,7 +7,7 @@ con = sqlite3.connect(f'{name}.sqlite3')
 curs = con.cursor()
 
 #recieves and formats copied table
-input('Go ahead and copy the table now before preceding as the program will use what is currently in your clipboard to generate the SQL table.\nClick return to continue.\n')
+input('Select and copy the google sheets cells that you want to turn into an SQL table. Do not paste it here; this program will pull the table directly from your clipboard.\nClick return to continue.\n')
 complete_stuff = pyperclip.paste()
 split_newline = complete_stuff.split('\n')
 for line in split_newline:
@@ -53,7 +53,7 @@ header = split_tabs[0]
 f_row = split_tabs[1]
 def get_dtypes():
     #assigns column data types based on the values in the first row of the table
-    prefer_real = input('Prefer REAL over INT (y/n)?\nIf you have columns that contain both floats and integers, answer y\n') == 'y'
+    prefer_real = input('Prefer REAL over INT (y/n)?\nThis will cause all columns with numbers to be assigned the data type REAL, even if they contain only integers. If you have columns that contain both floats and integers, answer y to avoid errors\n') == 'y'
     for val in f_row:
         try:
             if str(float(val))[::-1][0:2] == '0.' and not prefer_real:
